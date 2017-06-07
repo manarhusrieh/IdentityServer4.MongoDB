@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace IdentityServer4.MongoDB.Extensions
 {
-    public static class IdentityServerEntityFrameworkBuilderExtensions
+    public static class IdentityServerMongoDbBuilderExtensions
     {
         public static IIdentityServerBuilder AddConfigurationStore(
             this IIdentityServerBuilder builder,

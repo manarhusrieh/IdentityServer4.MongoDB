@@ -14,7 +14,7 @@ namespace IdentityServer4.MongoDB.Mappers
         public ClientMapperProfile()
         {
             // entity to model
-            CreateMap<Client, global::IdentityServer4.Models.Client>(MemberList.Destination)
+            CreateMap<Client, Models.Client>(MemberList.Destination)
                 .ForMember(x => x.AllowedGrantTypes,
                     opt => opt.MapFrom(src => src.AllowedGrantTypes.Select(x => x.GrantType)))
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => x.RedirectUri)))
@@ -28,11 +28,11 @@ namespace IdentityServer4.MongoDB.Mappers
                 .ForMember(x => x.AllowedCorsOrigins,
                     opt => opt.MapFrom(src => src.AllowedCorsOrigins.Select(x => x.Origin)));
 
-            CreateMap<ClientSecret, global::IdentityServer4.Models.Secret>(MemberList.Destination)
+            CreateMap<ClientSecret, Models.Secret>(MemberList.Destination)
                 .ForMember(dest => dest.Type, opt => opt.Condition(srs => srs != null));
 
             // model to entity
-            CreateMap<global::IdentityServer4.Models.Client, Client>(MemberList.Source)
+            CreateMap<Models.Client, Client>(MemberList.Source)
                 .ForMember(x => x.AllowedGrantTypes,
                     opt => opt.MapFrom(src => src.AllowedGrantTypes.Select(x => new ClientGrantType {GrantType = x})))
                 .ForMember(x => x.RedirectUris,
@@ -54,7 +54,7 @@ namespace IdentityServer4.MongoDB.Mappers
                 .ForMember(x => x.AllowedCorsOrigins,
                     opt => opt.MapFrom(src => src.AllowedCorsOrigins.Select(x => new ClientCorsOrigin {Origin = x})));
 
-            CreateMap<global::IdentityServer4.Models.Secret, ClientSecret>(MemberList.Source);
+            CreateMap<Models.Secret, ClientSecret>(MemberList.Source);
         }
     }
 }

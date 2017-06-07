@@ -11,10 +11,10 @@ namespace IdentityServer4.MongoDB.Mappers
         public PersistedGrantMapperProfile()
         {
             // entity to model
-            CreateMap<Entities.PersistedGrant, global::IdentityServer4.Models.PersistedGrant>(MemberList.Destination);
+            CreateMap<Entities.PersistedGrant, Models.PersistedGrant>(MemberList.Destination);
 
             // model to entity
-            CreateMap<global::IdentityServer4.Models.PersistedGrant, Entities.PersistedGrant>(MemberList.Source);
+            CreateMap<Models.PersistedGrant, Entities.PersistedGrant>(MemberList.Source);
         }
     }
 }
