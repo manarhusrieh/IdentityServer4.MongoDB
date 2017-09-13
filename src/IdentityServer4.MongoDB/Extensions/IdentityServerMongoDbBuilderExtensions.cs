@@ -65,6 +65,7 @@ namespace IdentityServer4.MongoDB.Extensions
 
         public static IApplicationBuilder UseIdentityServerTokenCleanup(this IApplicationBuilder app, IApplicationLifetime applicationLifetime)
         {
+            applicationLifetime = applicationLifetime ?? app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
             var tokenCleanup = app.ApplicationServices.GetService<TokenCleanup>();
             if (tokenCleanup == null) throw new InvalidOperationException("AddOperationalStore must be called on the service collection.");
 
