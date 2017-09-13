@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.MongoDB", "src\IdentityServer4.MongoDB\IdentityServer4.MongoDB.csproj", "{BD16D947-108B-438A-BF8A-F441C1F141C8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4FDB900F-C0BE-4EBC-9691-357A7AF1B441}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.MongoDB", "src\IdentityServer4.MongoDB\IdentityServer4.MongoDB.csproj", "{FD16BF48-1492-4B31-ADF2-8B4B171F06DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{80B8E586-D3AE-4F9C-BE21-F7D38AAC6ED2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.MongoDB.Tests", "test\IdentityServer4.MongoDB.Tests\IdentityServer4.MongoDB.Tests.csproj", "{14142808-ADAE-426B-BAA8-0E230576603C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +17,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BD16D947-108B-438A-BF8A-F441C1F141C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD16D947-108B-438A-BF8A-F441C1F141C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD16D947-108B-438A-BF8A-F441C1F141C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD16D947-108B-438A-BF8A-F441C1F141C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD16BF48-1492-4B31-ADF2-8B4B171F06DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD16BF48-1492-4B31-ADF2-8B4B171F06DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD16BF48-1492-4B31-ADF2-8B4B171F06DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD16BF48-1492-4B31-ADF2-8B4B171F06DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14142808-ADAE-426B-BAA8-0E230576603C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14142808-ADAE-426B-BAA8-0E230576603C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14142808-ADAE-426B-BAA8-0E230576603C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14142808-ADAE-426B-BAA8-0E230576603C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FD16BF48-1492-4B31-ADF2-8B4B171F06DB} = {4FDB900F-C0BE-4EBC-9691-357A7AF1B441}
+		{14142808-ADAE-426B-BAA8-0E230576603C} = {80B8E586-D3AE-4F9C-BE21-F7D38AAC6ED2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BEBF7DA2-1C34-48F2-BBD9-19012527E4F1}
 	EndGlobalSection
 EndGlobal
