@@ -4,19 +4,19 @@ using Xunit;
 
 namespace IdentityServer4.MongoDB.Tests.Mappers
 {
-    public class ApiResourceMapperProfileFacts
+    public class PersistedGrantMapperProfileTests
     {
         [Fact]
         public void Map()
         {
             // Arrange
-            var mapperConfiguration = new MapperConfiguration(expression => { expression.AddProfile<ApiResourceMapperProfile>(); });
+            var mapperConfiguration = new MapperConfiguration(expression => { expression.AddProfile<PersistedGrantMapperProfile>(); });
             var mapper = new AutoMapperWrapper(new Mapper(mapperConfiguration));
-            var model = new Models.ApiResource(nameof(ApiResourceMapperProfileFacts));
+            var model = new Models.PersistedGrant();
 
             // Act
-            var entity = mapper.Map<Entities.ApiResource>(model);
-            model = mapper.Map<Models.ApiResource>(entity);
+            var entity = mapper.Map<Entities.PersistedGrant>(model);
+            model = mapper.Map<Models.PersistedGrant>(entity);
 
             // Assert
             Assert.NotNull(entity);

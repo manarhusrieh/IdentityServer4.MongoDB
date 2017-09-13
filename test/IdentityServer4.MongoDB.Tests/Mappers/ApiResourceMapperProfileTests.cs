@@ -4,19 +4,19 @@ using Xunit;
 
 namespace IdentityServer4.MongoDB.Tests.Mappers
 {
-    public class IdentityResourceMapperProfileFacts
+    public class ApiResourceMapperProfileTests
     {
         [Fact]
         public void Map()
         {
             // Arrange
-            var mapperConfiguration = new MapperConfiguration(expression => { expression.AddProfile<IdentityResourceMapperProfile>(); });
+            var mapperConfiguration = new MapperConfiguration(expression => { expression.AddProfile<ApiResourceMapperProfile>(); });
             var mapper = new AutoMapperWrapper(new Mapper(mapperConfiguration));
-            var model = new Models.IdentityResource();
+            var model = new Models.ApiResource(nameof(ApiResourceMapperProfileTests));
 
             // Act
-            var entity = mapper.Map<Entities.IdentityResource>(model);
-            model = mapper.Map<Models.IdentityResource>(entity);
+            var entity = mapper.Map<Entities.ApiResource>(model);
+            model = mapper.Map<Models.ApiResource>(entity);
 
             // Assert
             Assert.NotNull(entity);

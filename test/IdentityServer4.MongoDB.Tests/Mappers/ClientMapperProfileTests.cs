@@ -4,7 +4,7 @@ using Xunit;
 
 namespace IdentityServer4.MongoDB.Tests.Mappers
 {
-    public class ClientMapperProfileFacts
+    public class ClientMapperProfileTests
     {
         [Fact]
         public void Map()
