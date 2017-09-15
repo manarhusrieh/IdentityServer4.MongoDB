@@ -1,5 +1,7 @@
 # IdentityServer4.MongoDB
 
+[![Build status](https://ci.appveyor.com/api/projects/status/c9bqe6pcbppfwrbc/branch/release?svg=true)](https://ci.appveyor.com/project/jwu-au/identityserver4-mongodb/branch/release)
+
 MongoDB persistence layer for IdentityServer4 based on the Official [EntityFramework](https://github.com/IdentityServer/IdentityServer4.EntityFramework) persistence layer.
 
 ## Simple Usage
