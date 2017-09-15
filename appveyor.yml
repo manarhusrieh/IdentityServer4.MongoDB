@@ -1,0 +1,14 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+services: mongodb
+before_build:
+- cmd: nuget restore
+build:
+  publish_nuget: true
+  verbosity: minimal
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/jing/api/v2
+  api_key:
+    secure: g98JjHGxECwKVdqmpyXzC5oVEC4ULXM5/au9/+FoaGs0WFjmfupljqCyvBaDUj26
