@@ -10,6 +10,9 @@ namespace IdentityServer4.MongoDB.Tests
 {
     public class HostContainer : IDisposable
     {
+        private static readonly object SyncObj = new object();
+        private static bool _isInitialized;
+
         public ILifetimeScope Container { get; }
 
         public HostContainer()
@@ -26,22 +29,32 @@ namespace IdentityServer4.MongoDB.Tests
             containerBuilder.Populate(services);
             Container = containerBuilder.Build();
 
-            // clear all data
-            ClearData();
+            EnsureInitialized();
         }
 
-        private void ClearData()
+        private void EnsureInitialized()
         {
-            using (var scope = Container.BeginLifetimeScope())
+            if (!_isInitialized)
             {
-                var database = scope.Resolve<IRepository<Client>>().Collection.Database;
-                database.Client.DropDatabase(database.DatabaseNamespace.DatabaseName);
+                lock (SyncObj)
+                {
+                    if (!_isInitialized)
+                    {
+                        using (var scope = Container.BeginLifetimeScope())
+                        {
+                            // clear all data
+                            var database = scope.Resolve<IRepository<Client>>().Collection.Database;
+                            database.Client.DropDatabase(database.DatabaseNamespace.DatabaseName);
+                        }
+                        _isInitialized = true;
+                    }
+                }
             }
         }
 
         public void Dispose()
         {
-            Container?.Dispose();
+            Container.Dispose();
         }
     }
 }
