@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Autofac;
 using IdentityServer4.MongoDB.Mappers;
 using IdentityServer4.MongoDB.Repositories;
@@ -22,8 +23,8 @@ namespace IdentityServer4.MongoDB.Tests.Stores
             // Arrange
             var testClient = new Models.Client
             {
-                ClientId = "test_client",
-                ClientName = "Test Client"
+                ClientId = Guid.NewGuid().ToString(),
+                ClientName = Guid.NewGuid().ToString()
             };
             var mapper = _hostContainer.Container.Resolve<IMapper>();
             var repository = _hostContainer.Container.Resolve<IRepository<Entities.Client>>();

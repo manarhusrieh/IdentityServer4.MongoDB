@@ -31,7 +31,7 @@ namespace IdentityServer4.MongoDB.Tests.Stores
                 UserClaims =
                 {
                     JwtClaimTypes.Subject,
-                    JwtClaimTypes.Name,
+                    JwtClaimTypes.Name
                 }
             };
         }

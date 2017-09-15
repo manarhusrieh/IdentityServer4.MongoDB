@@ -39,8 +39,8 @@ namespace IdentityServer4.MongoDB.Tests.Services
                     },
                     new Client
                     {
-                        ClientId = "2",
-                        ClientName = "2",
+                        ClientId = Guid.NewGuid().ToString(),
+                        ClientName = Guid.NewGuid().ToString(),
                         AllowedCorsOrigins = new List<string> {"https://www.selz.com", testCorsOrigin}
                     }
                 })
