@@ -16,20 +16,22 @@ identityServerBuilder
 ## Config database connection and collection prefix
 ```C#
 const string connectionString = "mongodb://db.local.com/mydb";
-identityServerBuilder.AddConfigurationStore(options =>
-{
-    options.CollectionNamePrefix = "ids_";
-    options.ConnectionString = connectionString;
-}).AddOperationalStore(options =>
-{
-    options.CollectionNamePrefix = "ids_";
-    options.ConnectionString = connectionString;
-});
+identityServerBuilder
+    .AddConfigurationStore(options =>
+    {
+        options.CollectionNamePrefix = "ids_";
+        options.ConnectionString = connectionString;
+    })
+    .AddOperationalStore(options =>
+    {
+        options.CollectionNamePrefix = "ids_";
+        options.ConnectionString = connectionString;
+    });
 ```
 ## Token cleanup
 ```C#
 // in Startup.Configure
-app
+applicationBuilder
     .UseIdentityServer()
     .UseIdentityServerTokenCleanup(appLifetime);
 ```
