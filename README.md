@@ -25,3 +25,8 @@ identityServerBuilder.AddConfigurationStore(options =>
         options.ConnectionString = connectionString;
     });
 ```
+## Token cleanup
+```C#
+// in Startup.Configure
+app.UseIdentityServer().UseIdentityServerTokenCleanup(appLifetime);
+```
