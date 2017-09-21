@@ -8,25 +8,28 @@ MongoDB persistence layer for IdentityServer4 based on the Official [EntityFrame
 ## Simple Usage
 ```c#
 // using default connection: mongodb://localhost/identityserver
-identityServerBuilder.AddConfigurationStoreCache().AddOperationalStore();
+identityServerBuilder
+    .AddConfigurationStore()
+    .AddOperationalStore();
 ```
 
 ## Config database connection and collection prefix
 ```C#
 const string connectionString = "mongodb://db.local.com/mydb";
 identityServerBuilder.AddConfigurationStore(options =>
-    {
-        options.CollectionNamePrefix = "ids_";
-        options.ConnectionString = connectionString;
-    })
-    .AddOperationalStore(options =>
-    {
-        options.CollectionNamePrefix = "ids_";
-        options.ConnectionString = connectionString;
-    });
+{
+    options.CollectionNamePrefix = "ids_";
+    options.ConnectionString = connectionString;
+}).AddOperationalStore(options =>
+{
+    options.CollectionNamePrefix = "ids_";
+    options.ConnectionString = connectionString;
+});
 ```
 ## Token cleanup
 ```C#
 // in Startup.Configure
-app.UseIdentityServer().UseIdentityServerTokenCleanup(appLifetime);
+app
+    .UseIdentityServer()
+    .UseIdentityServerTokenCleanup(appLifetime);
 ```
