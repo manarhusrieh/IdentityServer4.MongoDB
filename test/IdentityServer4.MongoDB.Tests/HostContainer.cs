@@ -1,6 +1,5 @@
 ﻿using System;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using IdentityServer4.MongoDB.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using IdentityServer4.MongoDB.Extensions;
@@ -26,7 +25,7 @@ namespace IdentityServer4.MongoDB.Tests
                 .AddOperationalStore();
 
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.Populate(services);
+            //containerBuilder.Populate(services);
             Container = containerBuilder.Build();
 
             EnsureInitialized();

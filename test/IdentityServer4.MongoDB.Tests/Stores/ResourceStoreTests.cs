@@ -154,7 +154,7 @@ namespace IdentityServer4.MongoDB.Tests.Stores
 
             // Act
             var resourceStore = _hostContainer.Container.Resolve<IResourceStore>();
-            var resources = await resourceStore.GetAllResources().ConfigureAwait(false);
+            var resources = await resourceStore.GetAllResourcesAsync().ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(resources);

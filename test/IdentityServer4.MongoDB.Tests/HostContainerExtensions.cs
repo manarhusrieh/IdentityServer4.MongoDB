@@ -6,7 +6,6 @@ using System.Security.Principal;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
-using Autofac.Extensions.DependencyInjection;
 using FakeItEasy;
 using Microsoft.AspNetCore.Http;
 
@@ -82,7 +81,7 @@ namespace IdentityServer4.MongoDB.Tests
             var ipAddress = IPAddress.Parse("127.0.0.1");
             A.CallTo(() => httpContextAccessor.HttpContext.Connection.RemoteIpAddress).Returns(ipAddress);
             A.CallTo(() => httpContextAccessor.HttpContext.User.Identity.IsAuthenticated).Returns(true);
-            A.CallTo(() => httpContextAccessor.HttpContext.RequestServices).Returns(new AutofacServiceProvider(hostContainer.Container));
+            //A.CallTo(() => httpContextAccessor.HttpContext.RequestServices).Returns(new AutofacServiceProvider(hostContainer.Container));
             if (!string.IsNullOrEmpty(sub))
             {
                 var principal = new GenericPrincipal(new ClaimsIdentity(new[] {new Claim("sub", sub)}), null);
