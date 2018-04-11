@@ -217,7 +217,7 @@ namespace IdentityServer4.MongoDB.Tests.Stores
             // Assert
             Assert.NotNull(resources);
             Assert.NotEmpty(resources);
-            Assert.Equal(1, resources.Count);
+            Assert.Single(resources);
         }
 
         [Fact]
@@ -243,7 +243,7 @@ namespace IdentityServer4.MongoDB.Tests.Stores
             Assert.NotEmpty(foundResource.ApiSecrets);
             Assert.NotNull(foundResource.Scopes);
             Assert.NotEmpty(foundResource.Scopes);
-            Assert.True(foundResource.Scopes.Any(x => x.UserClaims.Any()));
+            Assert.Contains(foundResource.Scopes, x => x.UserClaims.Any());
         }
 
         [Fact]
@@ -274,7 +274,7 @@ namespace IdentityServer4.MongoDB.Tests.Stores
             Assert.NotEmpty(resources.First().ApiSecrets);
             Assert.NotNull(resources.First().Scopes);
             Assert.NotEmpty(resources.First().Scopes);
-            Assert.True(resources.First().Scopes.Any(x => x.UserClaims.Any()));
+            Assert.Contains(resources.First().Scopes, x => x.UserClaims.Any());
         }
 
         [Fact]
@@ -300,7 +300,7 @@ namespace IdentityServer4.MongoDB.Tests.Stores
             // Assert
             Assert.NotNull(resources);
             Assert.NotEmpty(resources);
-            Assert.Equal(1, resources.Count);
+            Assert.Single(resources);
         }
     }
 }
