@@ -154,14 +154,14 @@ namespace IdentityServer4.MongoDB.Tests.Stores
 
             // Act
             var resourceStore = _hostContainer.Container.Resolve<IResourceStore>();
-            var resources = await resourceStore.GetAllResources().ConfigureAwait(false);
+            var resources = await resourceStore.GetAllResourcesAsync().ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(resources);
             Assert.NotEmpty(resources.IdentityResources);
             Assert.NotEmpty(resources.ApiResources);
-            Assert.True(resources.IdentityResources.Any(x => !x.ShowInDiscoveryDocument));
-            Assert.True(resources.ApiResources.Any(x => !x.Scopes.Any(y => y.ShowInDiscoveryDocument)));
+            Assert.Contains(resources.IdentityResources, x => !x.ShowInDiscoveryDocument);
+            Assert.Contains(resources.ApiResources, x => !x.Scopes.Any(y => y.ShowInDiscoveryDocument));
         }
 
         [Fact]

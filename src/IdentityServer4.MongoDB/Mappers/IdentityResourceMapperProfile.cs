@@ -1,24 +1,22 @@
-﻿using System.Linq;
-using AutoMapper;
-using IdentityServer4.MongoDB.Entities;
+﻿using AutoMapper;
 
 namespace IdentityServer4.MongoDB.Mappers
 {
     /// <summary>
-    /// AutoMapper configuration for identity resource
-    /// Between model and entity
+    /// Defines entity/model mapping for identity resources.
     /// </summary>
     public class IdentityResourceMapperProfile : Profile
     {
         public IdentityResourceMapperProfile()
         {
-            // entity to model
-            CreateMap<IdentityResource, Models.IdentityResource>(MemberList.Destination)
-                .ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => x.Type)));
+            CreateMap<Entities.IdentityResource, Models.IdentityResource>(MemberList.Destination)
+                .ConstructUsing(src => new Models.IdentityResource())
+                .ReverseMap();
 
-            // model to entity
-            CreateMap<Models.IdentityResource, IdentityResource>(MemberList.Source)
-                .ForMember(x => x.UserClaims, opts => opts.MapFrom(src => src.UserClaims.Select(x => new IdentityClaim {Type = x})));
+            CreateMap<Entities.IdentityClaim, string>()
+                .ConstructUsing(x => x.Type)
+                .ReverseMap()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src));
         }
     }
 }

@@ -58,7 +58,7 @@ namespace IdentityServer4.MongoDB.Stores
             return model;
         }
 
-        public async Task<Resources> GetAllResources()
+        public async Task<Resources> GetAllResourcesAsync()
         {
             var identities = await _identityResourceRepository.AsQueryable().ToListAsync().ConfigureAwait(false);
             var apis = await _apiResourceRepository.AsQueryable().ToListAsync().ConfigureAwait(false);
