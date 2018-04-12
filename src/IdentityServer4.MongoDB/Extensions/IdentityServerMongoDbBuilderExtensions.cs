@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using IdentityServer4.MongoDB.Options;
 using IdentityServer4.MongoDB.Services;
 using IdentityServer4.MongoDB.Stores;
-using IdentityServer4.Services;
 using IdentityServer4.Stores;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 namespace IdentityServer4.MongoDB.Extensions
 {
@@ -17,9 +16,9 @@ namespace IdentityServer4.MongoDB.Extensions
             this IIdentityServerBuilder builder,
             Action<StoreOptions> storeOptionsAction = null)
         {
-            builder.Services.AddTransient<IClientStore, ClientStore>();
-            builder.Services.AddTransient<IResourceStore, ResourceStore>();
-            builder.Services.AddTransient<ICorsPolicyService, CorsPolicyService>();
+            builder.AddClientStore<ClientStore>();
+            builder.AddResourceStore<ResourceStore>();
+            builder.AddCorsPolicyService<CorsPolicyService>();
 
             var storeOptions = new StoreOptions();
             storeOptionsAction?.Invoke(storeOptions);
@@ -33,14 +32,10 @@ namespace IdentityServer4.MongoDB.Extensions
         {
             builder.AddInMemoryCaching();
 
-            // these need to be registered as concrete classes in DI for
-            // the caching decorators to work
-            builder.Services.AddTransient<ClientStore>();
-            builder.Services.AddTransient<ResourceStore>();
-
             // add the caching decorators
             builder.AddClientStoreCache<ClientStore>();
             builder.AddResourceStoreCache<ResourceStore>();
+            builder.AddCorsPolicyCache<CorsPolicyService>();
 
             return builder;
         }
@@ -48,8 +43,11 @@ namespace IdentityServer4.MongoDB.Extensions
         public static IIdentityServerBuilder AddOperationalStore(
             this IIdentityServerBuilder builder,
             Action<StoreOptions> storeOptionsAction = null,
-            Action<TokenCleanupOptions> tokenCleanUpOptions = null)
+            Action<TokenCleanupOptions> tokenCleanUpOptionsAction = null)
         {
+            builder.Services.AddSingleton<TokenCleanup>();
+            builder.Services.AddSingleton<IHostedService, TokenCleanupHost>();
+
             builder.Services.AddTransient<IPersistedGrantStore, PersistedGrantStore>();
 
             var storeOptions = new StoreOptions();
@@ -57,22 +55,42 @@ namespace IdentityServer4.MongoDB.Extensions
             builder.Services.AddIdentityServerMongoDbOperationalRepositories(storeOptions);
 
             var tokenCleanupOptions = new TokenCleanupOptions();
-            tokenCleanUpOptions?.Invoke(tokenCleanupOptions);
-            builder.Services.AddSingleton(provider => new TokenCleanup(provider, provider.GetRequiredService<ILogger<TokenCleanup>>(), tokenCleanupOptions));
+            tokenCleanUpOptionsAction?.Invoke(tokenCleanupOptions);
+            builder.Services.AddSingleton(tokenCleanupOptions);
 
             return builder;
         }
 
-        public static IApplicationBuilder UseIdentityServerTokenCleanup(this IApplicationBuilder app, IApplicationLifetime applicationLifetime)
+        private class TokenCleanupHost : IHostedService
         {
-            applicationLifetime = applicationLifetime ?? app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
-            var tokenCleanup = app.ApplicationServices.GetService<TokenCleanup>();
-            if (tokenCleanup == null) throw new InvalidOperationException("AddOperationalStore must be called on the service collection.");
+            private readonly TokenCleanup _tokenCleanup;
+            private readonly TokenCleanupOptions _options;
 
-            applicationLifetime.ApplicationStarted.Register(tokenCleanup.Start);
-            applicationLifetime.ApplicationStopping.Register(tokenCleanup.Stop);
+            public TokenCleanupHost(TokenCleanup tokenCleanup, TokenCleanupOptions options)
+            {
+                _tokenCleanup = tokenCleanup;
+                _options = options;
+            }
 
-            return app;
+            public Task StartAsync(CancellationToken cancellationToken)
+            {
+                if (_options.EnableTokenCleanup)
+                {
+                    _tokenCleanup.Start(cancellationToken);
+                }
+
+                return Task.CompletedTask;
+            }
+
+            public Task StopAsync(CancellationToken cancellationToken)
+            {
+                if (_options.EnableTokenCleanup)
+                {
+                    _tokenCleanup.Stop();
+                }
+
+                return Task.CompletedTask;
+            }
         }
     }
 }

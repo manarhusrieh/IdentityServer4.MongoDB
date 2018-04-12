@@ -2,6 +2,10 @@
 {
     public class TokenCleanupOptions
     {
-        public int Interval { get; set; } = 60;
+        public bool EnableTokenCleanup { get; set; } = false;
+
+        public int Interval { get; set; } = 3600;
+
+        public int TokenCleanupBatchSize { get; set; } = 100;
     }
 }
