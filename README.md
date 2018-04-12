@@ -32,10 +32,4 @@ identityServerBuilder
         options.ConnectionString = connectionString;
     });
 ```
-## Token cleanup
-```C#
-// in Startup.Configure
-applicationBuilder
-    .UseIdentityServer()
-    .UseIdentityServerTokenCleanup(appLifetime);
-```
+
