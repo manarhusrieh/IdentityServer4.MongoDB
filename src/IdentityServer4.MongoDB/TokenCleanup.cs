@@ -106,12 +106,14 @@ namespace IdentityServer4.MongoDB
 
                     while (found >= _options.TokenCleanupBatchSize)
                     {
-                        var expired = await persistedGrantRepository.AsQueryable()
-                            .Where(x => x.Expiration < DateTimeOffset.UtcNow)
-                            .Take(_options.TokenCleanupBatchSize)
-                            .ToListAsync()
-                            .ConfigureAwait(false);
-
+                        var dateTime = DateTime.UtcNow;
+                        var expired = await persistedGrantRepository
+                        .AsQueryable()
+                        .Where(x =>x.Expiration < dateTime)
+                        .Take(_options.TokenCleanupBatchSize)
+                        .ToListAsync()
+                        .ConfigureAwait(false);
+                        
                         found = expired.Count;
                         _logger.LogInformation("Clearing {tokenCount} tokens", found);
 
